@@ -1,21 +1,24 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver .common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 import unittest, time, re
 
 class TestAddGroup(unittest.TestCase):
     def setUp(self):
-        self.wd = webdriver.Chrome(executable_path=r'')
+        firefox_binary = FirefoxBinary()
+        self.wd = webdriver.Firefox(firefox_binary=firefox_binary)
         self.wd.implicitly_wait(30)
 
     def test_add_group(self):
         wd = self.wd
         wd.get("http://localhost/addressbook/group.php")
         wd.find_element_by_name("user").click()
+        wd.find_element_by_name("user").send_keys("admin")
         wd.find_element_by_name("pass").click()
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys("secret")
