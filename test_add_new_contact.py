@@ -5,6 +5,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 import unittest
+from contact_information import Contactinfo
 
 class TestAddNewContact(unittest.TestCase):
     def setUp(self):
@@ -20,7 +21,7 @@ class TestAddNewContact(unittest.TestCase):
         self.login(wd, username = "admin", password = "secret")
         # Add new contact
         wd.find_element_by_link_text("add new").click()
-        self.fill_new_contact_form(wd, address = "Минск, Беларусь", company = "ZippyBus", firstname = "Елена", home ="224616", lastname = "Прокорым")
+        self.fill_new_contact_form(wd, Contactinfo(address = "Минск, Беларусь", company = "ZippyBus", firstname = "Елена", home ="224616", lastname = "Прокорым"))
         self.return_to_home_page(wd)
         self.logout(wd)
 
@@ -32,28 +33,28 @@ class TestAddNewContact(unittest.TestCase):
         # Return to home page
         wd.find_element_by_link_text("home page").click()
 
-    def fill_new_contact_form(self, wd, address, company, firstname, home, lastname):
+    def fill_new_contact_form(self, wd, contactinfo):
         # Fill contact form
         # First name
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(firstname)
+        wd.find_element_by_name("firstname").send_keys(contactinfo.firstname)
         # Last name
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(lastname)
+        wd.find_element_by_name("lastname").send_keys(contactinfo.lastname)
         # fill company
         wd.find_element_by_name("company").click()
         wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(company)
+        wd.find_element_by_name("company").send_keys(contactinfo.company)
         # fill address
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(address)
+        wd.find_element_by_name("address").send_keys(contactinfo.address)
         # fill telephone
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys(home)
+        wd.find_element_by_name("home").send_keys(contactinfo.home)
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("email").click()
         # Birthday
