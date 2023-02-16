@@ -12,7 +12,19 @@ class TestAddNewContact(unittest.TestCase):
         firefox_binary = FirefoxBinary()
         self.wd = webdriver.Firefox(firefox_binary=firefox_binary)
         self.wd.implicitly_wait(30)
-    
+
+    def test_add_new_empty_contact(self):
+        wd = self.wd
+        # Open home page
+        self.open_home_page(wd)
+        # Login
+        self.login(wd, username = "admin", password = "secret")
+        # Add new contact
+        wd.find_element_by_link_text("add new").click()
+        self.fill_new_contact_form(wd, Contactinfo(address = "", company = "", firstname = "", home = "", lastname = ""))
+        self.return_to_home_page(wd)
+        self.logout(wd)
+
     def test_add_new_contact(self):
         wd = self.wd
         # Open home page
@@ -59,13 +71,9 @@ class TestAddNewContact(unittest.TestCase):
         wd.find_element_by_name("email").click()
         # Birthday
         wd.find_element_by_name("bday").click()
-        Select(wd.find_element_by_name("bday")).select_by_visible_text("1")
-        wd.find_element_by_xpath("//option[@value='1']").click()
-        Select(wd.find_element_by_name("bmonth")).select_by_visible_text("January")
-        wd.find_element_by_xpath("//option[@value='January']").click()
+        wd.find_element_by_name("bmonth").click()
         wd.find_element_by_name("byear").click()
         wd.find_element_by_name("byear").clear()
-        wd.find_element_by_name("byear").send_keys()
         wd.find_element_by_name("aday").click()
         wd.find_element_by_name("aday").click()
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
