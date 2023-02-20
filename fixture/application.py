@@ -1,4 +1,5 @@
 from selenium import webdriver
+from fixture.session import SessionHelper
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
@@ -7,11 +8,8 @@ class Application:
         firefox_binary = FirefoxBinary()
         self.wd = webdriver.Firefox(firefox_binary=firefox_binary)
         self.wd.implicitly_wait(30)
+        self.session = SessionHelper(self)
 
-    def logout(self):
-        wd = self.wd
-        # logout
-        wd.find_element_by_link_text("Logout").click()
 
     def return_to_group_page(self):
         wd = self.wd
@@ -72,15 +70,6 @@ class Application:
         wd.find_element_by_name("aday").click()
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
-    def login(self, username, password):
-        wd = self.wd
-        self.open_home_page()
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").send_keys(username)
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
-        wd.find_element_by_xpath("//input[@value='Login']").click()
 
     def open_home_page(self):
         wd = self.wd
