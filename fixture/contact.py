@@ -49,3 +49,18 @@ class ContactHelper:
         # confirmation to delete a contact
         wd.switch_to.alert.accept()
 
+    def edit_first_contact(self, contactinfo):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        # Fill contact form
+        # Last name
+        wd.find_element_by_name("lastname").click()
+        wd.find_element_by_name("lastname").clear()
+        wd.find_element_by_name("lastname").send_keys(contactinfo.lastname)
+
+        # fill telephone
+        wd.find_element_by_name("email").click()
+        wd.find_element_by_name("email").send_keys(contactinfo.email)
+        # submit update
+        wd.find_element_by_name("update").click()
