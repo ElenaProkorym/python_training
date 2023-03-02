@@ -26,18 +26,27 @@ class ContactHelper:
         return len(wd.find_elements_by_name("selected[]"))
 
     def set_home(self, contact_info):
+        if contact_info.home is None:
+            return
+
         wd = self.app.wd
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
         wd.find_element_by_name("home").send_keys(contact_info.home)
 
     def set_address(self, contact_info):
+        if contact_info.address is None:
+            return
+
         wd = self.app.wd
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
         wd.find_element_by_name("address").send_keys(contact_info.address)
 
     def set_company(self, contact_info):
+        if contact_info.company is None:
+            return
+
         wd = self.app.wd
         wd.find_element_by_name("company").click()
         wd.find_element_by_name("company").clear()
@@ -66,12 +75,18 @@ class ContactHelper:
         wd.find_element_by_name("email").send_keys(contact_info.email)
 
     def set_first_name(self, contact_info):
+        if contact_info.firstname is None:
+            return
+
         wd = self.app.wd
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contact_info.firstname)
 
     def set_last_name(self, contact_info):
+        if contact_info.lastname is None:
+            return
+
         wd = self.app.wd
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
