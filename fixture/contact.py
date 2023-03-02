@@ -20,6 +20,11 @@ class ContactHelper:
         self.set_home(contact_info)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
+    def count(self):
+        wd = self.app.wd
+        #self.open_home_page()
+        return len(wd.find_elements_by_name("selected[]"))
+
     def set_home(self, contact_info):
         wd = self.app.wd
         wd.find_element_by_name("home").click()
