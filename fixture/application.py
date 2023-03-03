@@ -9,7 +9,7 @@ class Application:
     def __init__(self):
         firefox_binary = FirefoxBinary()
         self.wd = webdriver.Firefox(firefox_binary=firefox_binary)
-        self.wd.implicitly_wait(5)
+        self.wd.implicitly_wait(1)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
@@ -23,7 +23,8 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        wd.get("http://localhost/addressbook/")
+        if not (wd.current_url.endswith("/addressbook/")):
+            wd.get("http://localhost/addressbook/")
 
     def is_element_present(self, how, what):
         try:
