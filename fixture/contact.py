@@ -1,7 +1,18 @@
+from model.contact_information import ContactInfo
 class ContactHelper:
 
     def __init__(self, app):
         self.app = app
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        contacts = []
+        for tr_element in wd.find_elements_by_css_selector("tr[name='entry']"):
+            id = tr_element.find_element_by_name("selected[]").get_attribute("value")
+            last_name = tr_element.find_element_by_css_selector("td:nth-child(2)").text
+            first_name = tr_element.find_element_by_css_selector("td:nth-child(3)").text
+            contacts.append(ContactInfo(id = id, firstname=first_name, lastname= last_name))
+        return contacts
 
     def fill_new_form(self, contact_info):
         wd = self.app.wd
