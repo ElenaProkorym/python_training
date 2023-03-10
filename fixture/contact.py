@@ -4,15 +4,18 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    contacts_cache = None
+
     def get_contact_list(self):
-        wd = self.app.wd
-        contacts = []
-        for tr_element in wd.find_elements_by_css_selector("tr[name='entry']"):
-            id = tr_element.find_element_by_name("selected[]").get_attribute("value")
-            last_name = tr_element.find_element_by_css_selector("td:nth-child(2)").text
-            first_name = tr_element.find_element_by_css_selector("td:nth-child(3)").text
-            contacts.append(ContactInfo(id = id, firstname=first_name, lastname= last_name))
-        return contacts
+        if self.contacts_cache is None:
+            wd = self.app.wd
+            self.contacts_cache = []
+            for tr_element in wd.find_elements_by_css_selector("tr[name='entry']"):
+                id = tr_element.find_element_by_name("selected[]").get_attribute("value")
+                last_name = tr_element.find_element_by_css_selector("td:nth-child(2)").text
+                first_name = tr_element.find_element_by_css_selector("td:nth-child(3)").text
+                self.contacts_cache.append(ContactInfo(id = id, firstname=first_name, lastname= last_name))
+        return list(self.contacts_cache)
 
     def fill_new_form(self, contact_info):
         wd = self.app.wd
@@ -30,6 +33,7 @@ class ContactHelper:
         # fill telephone
         self.set_home(contact_info)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.contacts_cache = None
 
     def count(self):
         wd = self.app.wd
@@ -66,6 +70,7 @@ class ContactHelper:
     def click_delete_first_contact(self):
         wd = self.app.wd
         wd.find_element_by_xpath("//input[@value='Delete']").click()
+        self.contacts_cache = None
 
     def select_first_contact(self):
         wd = self.app.wd
@@ -74,6 +79,7 @@ class ContactHelper:
     def click_edit_first_contact(self):
         wd = self.app.wd
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        self.contacts_cache = None
 
     def click_update_button(self):
         wd = self.app.wd

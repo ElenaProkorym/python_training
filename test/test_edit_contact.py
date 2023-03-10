@@ -11,10 +11,12 @@ def test_edit_first_contact(app):
     app.contact.set_email(contact_info)
     app.contact.click_update_button()
     app.open_home_page()
-    new_contacts = app.contact.get_contact_list()
+
     contact_info.id = old_contacts[0].id
 
-    assert  len(old_contacts) == len(new_contacts)
+    assert len(old_contacts) == app.contact.count()
+    #assert  len(old_contacts) == len(new_contacts)
+    new_contacts = app.contact.get_contact_list()
     old_contacts[0]=contact_info
     assert sorted(old_contacts, key=ContactInfo.id_or_max) == sorted(new_contacts, key=ContactInfo.id_or_max)
 
