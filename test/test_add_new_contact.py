@@ -15,7 +15,7 @@ from model.contact_information import ContactInfo
 def test_add_new_contact(app):
     app.open_home_page()
     old_contacts = app.contact.get_contact_list()
-    contact_info = ContactInfo(address ="Минск, Беларусь", company ="ZippyBus", firstname ="Елена", home ="224616", lastname ="Прокорым")
+    contact_info = ContactInfo(firstname ="Елена", lastname = "Прокорым", address = "Минск, Беларусь", homephone = "224616", mobilephone = "334 12 05", workphone = "1-212-45", secondaryphone = "+9991502", company = "ZippyBus", email = "zipp@com", email2 = "lena@com", email3 = "mars.privet@com")
     app.contact.fill_new_form(contact_info)
     app.open_home_page()
 
