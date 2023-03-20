@@ -17,7 +17,10 @@ def clear(s):
 
 def merge_email_address_info_like_on_home_page(contact):
     #return merge([contact.email, contact.email2, contact.email3])
-    return "\n".join(filter(lambda x: x is not None,[contact.email, contact.email2, contact.email3]))
+    name= "\n".join(filter(lambda x: x!="" and x is not None,
+                                        [contact.email, contact.email2, contact.email3]))
+    return re.sub(" {2,}", " ", name).strip()  ## replace multiple whitespaces with one and trim whitespaces
+
 
 
 def merge_phones_like_on_home_page(contact):
