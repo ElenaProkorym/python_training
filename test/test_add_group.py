@@ -1,23 +1,12 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
-import pytest
-import random
-import string
-import re
-def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + string.punctuation + " "*10  #
-    name = prefix + " ".join([random.choice(symbols) for i in range (random.randrange(maxlen))])
-    name = name.replace("'", "") # remove single quotes
-    return re.sub(" {2,}", " ", name).strip() ## replace multiple whitespaces with one and trim whitespaces
+# import pytest
+# from data.groups import constant as testdata
 
+# @pytest.mark.parametrize("group", testdata, ids =[repr(x) for x in testdata])
 
-testdata = [Group(name="", header="", footer="")] + [
-    Group(name=random_string("name", 10), header= random_string("header", 20), footer=random_string("footer", 20))
-    for i in range (5)
-]
-@pytest.mark.parametrize("group", testdata, ids =[repr(x) for x in testdata])
-
-def test_add_group(app, group):
+def test_add_group(app, json_groups):
+    group = json_groups
     old_groups = app.group.get_group_list()
     app.group.create(group)
     #assert app.group.count() - len(old_groups) == 1
