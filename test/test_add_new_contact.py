@@ -2,12 +2,10 @@
 from model.contact_information import ContactInfo
 #from data.contacts import contactdate
 
-
-
 #@pytest.mark.parametrize("contact_info", contactdate, ids=[repr(x) for x in contactdate])
 
-def test_add_new_contact(app, data_contacts):
-    contact_info = data_contacts
+def test_add_new_contact(app, json_contacts):
+    contact_info = json_contacts
     app.open_home_page()
     old_contacts = app.contact.get_contact_list()
     app.contact.fill_new_form(contact_info)
