@@ -10,7 +10,7 @@ def test_edit_contact(app):
 
     app.contact.click_edit_contact_by_index(index)
     #app.contact.click_edit_first_contact()
-    contact_info = ContactInfo(lastname="Лисица", email="ivanov@rambler.ru")
+    contact_info = ContactInfo(lastname="Малина", email="ivanov@rambler.ru")
     app.contact.set_last_name(contact_info)
     app.contact.set_email(contact_info)
     app.contact.click_update_button()
