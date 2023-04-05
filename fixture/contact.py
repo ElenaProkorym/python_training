@@ -142,12 +142,21 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
 
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_("input[value='%s']" % id).click()
+
     def select_first_contact(self):
         self.select_contact_by_index(0)
 
     def click_edit_contact_by_index(self, index):
         wd = self.app.wd
         wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
+        self.contacts_cache = None
+
+    def click_edit_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//a[@href='edit.php?id="+id+"']").click()
         self.contacts_cache = None
 
     def click_edit_first_contact(self):
