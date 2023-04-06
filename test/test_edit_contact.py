@@ -6,7 +6,8 @@ def test_edit_contact(app, db, check_ui):
         app.contact.fill_new_form(ContactInfo())
 
     app.open_home_page()
-    old_contacts = db.get_contact_list()
+    old_contacts = get_contacts(check_ui, app, db)
+
     contact = random.choice(old_contacts)
     app.contact.click_edit_contact_by_id(contact.id)
 
@@ -19,10 +20,12 @@ def test_edit_contact(app, db, check_ui):
     app.contact.click_update_button()
     app.open_home_page()
 
-    new_contacts = db.get_contact_list()
+    new_contacts = get_contacts(check_ui, app, db)
 
+    assert sorted(old_contacts, key=ContactInfo.id_or_max) == sorted(new_contacts, key=ContactInfo.id_or_max)
+
+def get_contacts(check_ui, app, db):
     if check_ui:
-        assert sorted(old_contacts, key=ContactInfo.id_or_max) == sorted(new_contacts, key=ContactInfo.id_or_max)
-
-    #assert old_contacts[0] != new_contacts[0]
-
+        return app.contact.get_contact_list()
+    else:
+        return db.get_contact_list()
