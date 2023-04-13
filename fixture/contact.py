@@ -1,5 +1,6 @@
 from model.contact_information import ContactInfo
 import re
+import time
 class ContactHelper:
 
     def __init__(self, app):
@@ -137,6 +138,17 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         self.contacts_cache = None
+
+    def click_add_to_group(self):
+        wd = self.app.wd
+        group_id = wd.find_element_by_name("to_group").get_attribute("value")
+        wd.find_element_by_xpath("//input[@name='add']").click()
+        return group_id
+
+    def click_group_page(self):
+        wd = self.app.wd
+        time.sleep(1)
+        wd.find_element_by_xpath("//div[@id='content']/div/i/a").click()
 
     def select_contact_by_index(self, index):
         wd = self.app.wd
