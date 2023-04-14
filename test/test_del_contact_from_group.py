@@ -3,9 +3,9 @@ import random
 from model.group import Group
 from fixture.orm import ORMFixture
 
-def test_add_contact_to_group(app):
-    db = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="")
+db= ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="")
 
+def test_delete_contact_from_group(app):
     app.open_home_page()
     if len(app.contact.get_contact_list()) == 0:
         app.contact.fill_new_form(ContactInfo())
@@ -18,7 +18,9 @@ def test_add_contact_to_group(app):
     app.contact.select_contact_by_id(contact.id)
 
     group_id = app.contact.click_add_to_group()
+    app.contact.click_group_page()
+    app.contact.select_contact_by_id(contact.id)
+    app.contact.click_remove_from_group()
 
     group_contacts = db.get_contacts_in_group(Group(id=group_id))
-    assert contact in group_contacts
-
+    assert contact not in group_contacts

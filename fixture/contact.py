@@ -150,6 +150,10 @@ class ContactHelper:
         time.sleep(1)
         wd.find_element_by_xpath("//div[@id='content']/div/i/a").click()
 
+    def click_remove_from_group(self):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[name='remove']").click()
+
     def select_contact_by_index(self, index):
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
